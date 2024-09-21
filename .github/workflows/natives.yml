@@ -20,9 +20,11 @@ jobs:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+            cares: false
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+            cares: true
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -31,6 +33,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Install c-ares
+      if: ${{ matrix.cares }}
+      run: |
+        cd $(mktemp -d)
+        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libc-ares2_1.18.1-2ubuntu0.1_amd64.deb
+        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libc-ares-dev_1.18.1-2ubuntu0.1_amd64.deb
+        sudo apt-get install ./libc-ares2_1.18.1-2ubuntu0.1_amd64.deb ./libc-ares-dev_1.18.1-2ubuntu0.1_amd64.deb
+        cd ${{ github.workspace }}
 
     - name: Set reusable strings
       id: strings
