@@ -38,9 +38,9 @@ jobs:
       if: ${{ matrix.cares }}
       run: |
         cd $(mktemp -d)
-        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libcares2_1.33.0-1_amd64.deb
-        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libc-ares-dev_1.33.0-1_amd64.deb
-        sudo apt-get install ./libcares2_1.33.0-1_amd64.deb ./libc-ares-dev_1.33.0-1_amd64.deb
+        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libcares2_1.27.0-1.0ubuntu1_amd64.deb
+        sudo wget -c http://archive.ubuntu.com/ubuntu/pool/main/c/c-ares/libc-ares-dev_1.27.0-1.0ubuntu1_amd64.deb
+        sudo apt-get install ./libcares2_1.27.0-1.0ubuntu1_amd64.deb ./libc-ares-dev_1.27.0-1.0ubuntu1_amd64.deb
         cd ${{ github.workspace }}
 
     - name: Set reusable strings
