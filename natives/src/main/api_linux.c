@@ -8,7 +8,7 @@
 typedef struct params {
     uint_fast8_t               init;
     pthread_mutex_t            dispatch_lock;
-    ares_channel_t            *channel;
+    ares_channel               channel;
     struct ares_addrinfo_hints hints;
 } params_t;
 
@@ -18,7 +18,7 @@ uint64_t api_init() {
     if (PARAMS.init) return E_STATE;
 
     pthread_mutex_t            *dispatch_lock = &PARAMS.dispatch_lock;
-    ares_channel_t             *channel = NULL;
+    ares_channel                channel = NULL;
     struct ares_options         options;
     int                         optmask = 0;
     struct ares_addrinfo_hints *hints = &PARAMS.hints;
@@ -60,7 +60,7 @@ uint64_t api_destroy() {
 
     int estat;
 
-    ares_channel_t *channel = PARAMS.channel;
+    ares_channel channel = PARAMS.channel;
     ares_queue_wait_empty(channel, -1);
     ares_destroy(channel);
     ares_library_cleanup();
@@ -111,7 +111,7 @@ void api_query0(
         const char *server,
         const char *domain,
         dnsbench_query_callback_t callback,
-        ares_channel_t *channel,
+        ares_channel channel,
         struct ares_addrinfo_hints *hints,
         uint64_t *err
 ) {
