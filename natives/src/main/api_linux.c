@@ -32,13 +32,17 @@ uint64_t api_init() {
     }
 
     ares_library_init(ARES_LIB_INIT_ALL);
+#ifdef ARES_OPT_EVENT_THREAD
     if (!ares_threadsafety()) {
         return E_ARES(ARES_ENOTIMP);
     }
+#endif
 
     memset(&options, 0, sizeof(options));
+#ifdef ARES_OPT_EVENT_THREAD
     optmask |= ARES_OPT_EVENT_THREAD;
     options.evsys = ARES_EVSYS_DEFAULT;
+#endif
 
     estat = ares_init_options(&channel, &options, optmask);
     if (estat != ARES_SUCCESS) {
@@ -61,7 +65,9 @@ uint64_t api_destroy() {
     int estat;
 
     ares_channel channel = PARAMS.channel;
+#ifdef ARES_OPT_EVENT_THREAD
     ares_queue_wait_empty(channel, -1);
+#endif
     ares_destroy(channel);
     ares_library_cleanup();
 
