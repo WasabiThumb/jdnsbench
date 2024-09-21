@@ -33,8 +33,14 @@ static char EMSG_ARES[DYN_MSG_CAPACITY] = EMSG_ARES_S;
 
 //
 
+#ifdef _WIN32
+#define EMSG_UNKNOWN_HEX_FMT "%llx)"
+#else
+#define EMSG_UNKNOWN_HEX_FMT "%lx)"
+#endif
+
 const char *logging_strerror_unknown(uint64_t code) {
-    sprintf(&EMSG_UNKNOWN[17], "%llx)", code);
+    sprintf(&EMSG_UNKNOWN[17], EMSG_UNKNOWN_HEX_FMT, code);
     return EMSG_UNKNOWN;
 }
 
