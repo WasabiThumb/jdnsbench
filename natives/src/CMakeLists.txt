@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.17)
+project(jdnsbench)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+set(CMAKE_SYSTEM_PROCESSOR AMD64)
+
+find_package(JNI REQUIRED)
+
+file(GLOB SRC_FILES main/*.c)
+file(GLOB INC_FILES headers/*.h)
+
+include_directories(headers/ ${JNI_INCLUDE_DIRS})
+add_library(jdnsbench SHARED main/main.c ${SRC_FILES} ${INC_FILES})
+if(UNIX)
+    target_link_libraries(jdnsbench cares)
+endif()
+if(WIN32)
+    target_link_libraries(jdnsbench Dnsapi Ws2_32)
+endif()
