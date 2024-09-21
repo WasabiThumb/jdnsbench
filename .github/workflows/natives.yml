@@ -22,11 +22,13 @@ jobs:
             cpp_compiler: cl
             cares: false
             artifact_classifier: windows
+            artifact_path: "Release/jdnsbench.dll"
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
             cares: true
             artifact_classifier: linux
+            artifact_path: "libjdnsbench.so"
         exclude:
           - os: windows-latest
             c_compiler: gcc
@@ -67,4 +69,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: natives-${{ matrix.artifact_classifier }}
-        path: ${{ steps.strings.outputs.build-output-dir }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/${{ matrix.artifact_path }}
