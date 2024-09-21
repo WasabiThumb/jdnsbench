@@ -36,7 +36,7 @@ jobs:
 
     - name: Install c-ares
       if: ${{ matrix.cares }}
-      run: sudo apt install c-ares
+      run: sudo apt install libc-ares-dev
 
     - name: Set reusable strings
       id: strings
