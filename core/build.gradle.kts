@@ -23,19 +23,21 @@ tasks.compileJava {
 }
 
 tasks.processResources {
+    val buildNatives: Boolean = !project.hasProperty("noGradleCmake")
     val natives = project(":natives")
-    dependsOn(natives.tasks.build)
+    if (buildNatives) dependsOn(natives.tasks.build)
 
     outputs.upToDateWhen { false }
-
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
     doFirst {
-        val cmakeDir = natives.layout.buildDirectory.file("cmake").get().asFile
-        cmakeDir.listFiles { file ->
-            file.extension in listOf("so", "dll")
-        }?.forEach { file ->
-            from(file.absolutePath) to file.name
+        if (buildNatives) {
+            val cmakeDir = natives.layout.buildDirectory.file("cmake").get().asFile
+            cmakeDir.listFiles { file ->
+                file.extension in listOf("so", "dll")
+            }?.forEach { file ->
+                from(file.absolutePath) to file.name
+            }
         }
     }
 }
