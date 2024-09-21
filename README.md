@@ -2,6 +2,8 @@
 A fast, extensive & transparent DNS benchmark that runs in your terminal!
 Made in Java & C for Windows & Linux x64.
 
+![Image of Benchmark](https://raw.githubusercontent.com/WasabiThumb/jdnsbench/refs/heads/master/doc/4.png)
+
 ## Requirements
 - **Java 17**
 - **C-ARES** (Linux only)
@@ -39,3 +41,9 @@ application.
 - Better error handling for native errors
 - Improve look
 - Fix IPv6 on Windows
+
+
+## Gallery
+![Image of Welcomer](https://raw.githubusercontent.com/WasabiThumb/jdnsbench/refs/heads/master/doc/1.png)
+![Image of Configuration](https://raw.githubusercontent.com/WasabiThumb/jdnsbench/refs/heads/master/doc/2.png)
+![Image of Configuration](https://raw.githubusercontent.com/WasabiThumb/jdnsbench/refs/heads/master/doc/3.png)

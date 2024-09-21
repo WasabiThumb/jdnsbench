@@ -71,8 +71,8 @@ static void query_callback_open(dnsbench_query_callback_t self, uint64_t status,
     jmethodID method = JNI_PARAMS.m_callback_open;
 
     jvalue args[2];
-    args[0] = (jvalue) ((jlong) status);
-    args[1] = (jvalue) ((jint) timeouts);
+    args[0].j = (jlong) status;
+    args[1].i = (jint) timeouts;
     (*env)->CallVoidMethodA(env, handle, method, args);
 }
 

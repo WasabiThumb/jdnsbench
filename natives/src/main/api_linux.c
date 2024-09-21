@@ -1,10 +1,9 @@
+#ifdef __linux__
 #include <ares.h>
 #include <stdint.h>
 #include <pthread.h>
 #include "../headers/logging.h"
 #include "../headers/api.h"
-
-#ifdef __linux__
 
 typedef struct params {
     uint_fast8_t               init;
