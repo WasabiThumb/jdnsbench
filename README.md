@@ -11,7 +11,7 @@ Made in Java & C for Windows & Linux x64.
 
 ## Installing
 ### Download the JAR
-Fetch a build from the Releases tab or CI, and follow [Usage](#usage). You may create
+Fetch a build from the [Releases](https://github.com/WasabiThumb/jdnsbench/releases) tab or [CI](https://github.com/WasabiThumb/jdnsbench/actions/workflows/app.yml), and follow [Usage](#usage). You may create
 a shortcut the JAR file for ease of use. An example XDG [Desktop Entry](https://wiki.archlinux.org/title/Desktop_entries):
 ```text
 [Desktop Entry]
