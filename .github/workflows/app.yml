@@ -1,0 +1,57 @@
+name: app
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
+
+    - name: Clean Natives
+      run: |
+        rm -f ${{ github.workspace }}/core/src/main/resources/*.dll
+        rm -f ${{ github.workspace }}/core/src/main/resources/*.so
+
+    - name: Fetch Windows Natives
+      id: fetch-natives-windows
+      uses: dawidd6/action-download-artifact@v6
+      with:
+        workflow: natives.yml
+        branch: master
+        name: natives-windows
+        path: ${{ github.workspace }}/core/src/main/resources
+
+    - name: Fetch Linux Natives
+      id: fetch-natives-linux
+      uses: dawidd6/action-download-artifact@v6
+      with:
+        workflow: natives.yml
+        branch: master
+        name: natives-linux
+        path: ${{ github.workspace }}/core/src/main/resources
+
+    - name: Build with Gradle
+      run: ./gradlew clean app:build -PnoGradleCmake=true
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: ${{ github.workspace }}/app/build/libs
