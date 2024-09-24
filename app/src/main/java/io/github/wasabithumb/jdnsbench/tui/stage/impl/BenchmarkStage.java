@@ -49,9 +49,7 @@ public class BenchmarkStage implements TUIStage {
         final int w = tui.width();
         final int h = tui.height();
         if (w < 44 || h < 12) {
-            System.out.print(tui.ansi().eraseScreen().cursor(0, 0));
-            System.out.println(tui.ansi().fgBrightRed().a("Your terminal is too small!"));
-            System.out.println(tui.ansi().fgBrightRed().a("Resize your terminal or press ESC to exit."));
+            this.tooSmall(tui);
             return;
         }
 

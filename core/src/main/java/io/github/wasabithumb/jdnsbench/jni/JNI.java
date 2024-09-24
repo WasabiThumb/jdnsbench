@@ -1,15 +1,11 @@
 package io.github.wasabithumb.jdnsbench.jni;
 
 import io.github.wasabithumb.jdnsbench.asset.CoreResources;
-import io.github.wasabithumb.jdnsbench.util.SystemUtil;
 
 public class JNI {
 
     static {
-        if (SystemUtil.IS_LINUX) {
-            System.loadLibrary("cares");
-        }
-        // Load the bundled native library
+        JNISystemLibraries.unwrapCares();
         CoreResources.loadLibraryAssert("jdnsbench");
     }
 

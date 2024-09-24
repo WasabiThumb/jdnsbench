@@ -20,4 +20,10 @@ public interface TUIStage {
 
     default void onInputArrowKey(@NotNull TUI tui, @NotNull TUIArrowKey key) { }
 
+    default void tooSmall(@NotNull TUI tui) {
+        System.out.print(tui.ansi().eraseScreen().cursor(0, 0));
+        System.out.println(tui.ansi().fgBrightRed().a("Your terminal is too small!"));
+        System.out.println(tui.ansi().fgBrightRed().a("Resize your terminal or press ESC to exit."));
+    }
+
 }

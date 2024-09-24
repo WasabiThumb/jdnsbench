@@ -1,8 +1,10 @@
 package io.github.wasabithumb.jdnsbench;
 
-import io.github.wasabithumb.jdnsbench.asset.loader.AssetLoader;
+import io.github.wasabithumb.jdnsbench.jni.JNISystemLibraries;
 import io.github.wasabithumb.jdnsbench.tui.TUI;
+import io.github.wasabithumb.jdnsbench.tui.stage.TUIStage;
 import io.github.wasabithumb.jdnsbench.tui.stage.impl.MainStage;
+import io.github.wasabithumb.jdnsbench.tui.stage.impl.MissingLibraryStage;
 import io.github.wasabithumb.jdnsbench.util.ReflectUtil;
 import io.github.wasabithumb.jdnsbench.util.SystemUtil;
 import org.jline.terminal.Terminal;
@@ -39,7 +41,11 @@ public class Main {
         term.enterRawMode();
 
         try (TUI tui = new TUI(term)) {
-            tui.setStage(new MainStage());
+            if (JNISystemLibraries.missingCares()) {
+                tui.setStage(getMissingCaresStage());
+            } else {
+                tui.setStage(new MainStage());
+            }
             tui.join();
         } catch (IOException ignored) { }
     }
@@ -83,6 +89,63 @@ public class Main {
     private static void fatal(final String message) {
         System.err.println(message);
         System.exit(1);
+    }
+
+    private static TUIStage getMissingCaresStage() {
+        MissingLibraryStage stage = new MissingLibraryStage("C-ARES");
+        stage.addInstructions(
+                "Alpine Linux",
+                "apk update",
+                "apk add --upgrade c-ares"
+        );
+        stage.addInstructions(
+                "Arch Linux",
+                "# Make sure the \"extra\" repository is enabled in /etc/pacman.conf",
+                "pacman -Syu c-ares"
+        );
+        stage.addInstructions(
+                "CentOS",
+                "dnf install c-ares"
+        );
+        stage.addInstructions(
+                "Debian",
+                "sudo apt-get update",
+                "sudo apt-get install libc-ares2"
+        );
+        stage.addInstructions(
+                "Fedora (RHEL)",
+                "dnf install c-ares"
+        );
+        stage.addInstructions(
+                "FreeBSD",
+                "pkg install c-ares"
+        );
+        stage.addInstructions(
+                "OpenSUSE",
+                "zypper install c-ares-utils"
+        );
+        stage.addInstructions(
+                "Oracle Linux",
+                "dnf install c-ares"
+        );
+        stage.addInstructions(
+                "Rocky Linux",
+                "dnf install c-ares"
+        );
+        stage.addInstructions(
+                "Solus",
+                "sudo eopkg install c-ares"
+        );
+        stage.addInstructions(
+                "Ubuntu",
+                "sudo apt-get update",
+                "sudo apt-get install libc-ares2"
+        );
+        stage.addInstructions(
+                "Void Linux",
+                "xbps-install -Su c-ares"
+        );
+        return stage;
     }
 
 }

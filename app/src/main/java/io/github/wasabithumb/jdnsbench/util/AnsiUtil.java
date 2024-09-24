@@ -10,6 +10,8 @@ public final class AnsiUtil {
     public static final CharSequence ESC_CURSOR_VISIBLE;
     public static final CharSequence ESC_DIM;
     public static final CharSequence ESC_DIM_OFF;
+    public static final CharSequence ESC_BLINK;
+    public static final CharSequence ESC_BLINK_OFF;
     static {
         final CharSequence PREFIX = CharBuffer.wrap(new char[] { (char) 27, '[' });
         ESC_ENABLE_BUF       = new JoinedCharSequence(PREFIX, "?1049h");
@@ -18,6 +20,8 @@ public final class AnsiUtil {
         ESC_CURSOR_VISIBLE   = new JoinedCharSequence(PREFIX, "?25h");
         ESC_DIM              = new JoinedCharSequence(PREFIX, "2m");
         ESC_DIM_OFF          = new JoinedCharSequence(PREFIX, "22m");
+        ESC_BLINK            = new JoinedCharSequence(PREFIX, "5m");
+        ESC_BLINK_OFF        = new JoinedCharSequence(PREFIX, "25m");
     }
 
 }
